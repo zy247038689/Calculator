@@ -3,8 +3,8 @@ package com.example.calculator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.Button;  //引用按钮组件
+import android.widget.EditText;  //引用文本编辑框组件
 import android.widget.Toast;
 import java.math.BigDecimal;
 import java.util.Stack;
@@ -12,8 +12,7 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
-    EditText txt_result;
-    EditText txt_edit;
+    EditText txt_result, txt_edit;
     boolean isOperateDown = false;
     boolean isDotDown = false;
 
@@ -84,8 +83,19 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 txt_edit.setText("0");
                 txt_result.setText("");
                 break;
+            case R.id.btn_offload: {
+                String strEdit = txt_edit.getText().toString();
+                double temp = Double.parseDouble(strEdit);
+                if (temp > 0) {
+                    strEdit = "-" + strEdit;
+                } else {
+                    strEdit = String.valueOf(temp * (-1));
+                }
+                txt_edit.setText(strEdit);
+            }
+            break;
 
-                case R.id.btn_point: {
+            case R.id.btn_point: {
                 String strEdit = txt_edit.getText().toString();
                 if (!isDotDown) {
                     isDotDown = true;
@@ -95,18 +105,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 }
                 break;
             }
-            case R.id.btn_offload: {
-                String strEdit = txt_edit.getText().toString();
-                double temp = Double.parseDouble(strEdit);
-
-                if (temp > 0) {
-                    strEdit = "-" + strEdit;
-                } else {
-                    strEdit = String.valueOf(temp * (-1));
-                }
-                txt_edit.setText(strEdit);
-            }
-            break;
             case R.id.btn_equal:
                 equal();break;
         }
@@ -119,7 +117,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         if (strEdit.equals("0") || Pattern.matches("^=[0-9].*", strEdit)) {
             txt_edit.setText(num);
-            txt_result.setText("");
         } else {
             txt_edit.setText(strEdit + num);
         }
@@ -175,6 +172,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         if(numString.length() > 0)
             numStack.push(numString);
 
+
         while(!opStack.empty()) {
             numStack.push(opStack.pop());
         }
@@ -203,13 +201,17 @@ public class MainActivity extends Activity implements View.OnClickListener {
                     double firstNum = Double.parseDouble(String.valueOf(numStack.pop()));
                     switch (result) {
                         case "+":
-                            num = firstNum + secondNum;break;
+                            num = firstNum + secondNum;
+                            break;
                         case "-":
-                            num = firstNum - secondNum;break;
+                            num = firstNum - secondNum;
+                            break;
                         case "×":
-                            num = firstNum * secondNum;break;
+                            num = firstNum * secondNum;
+                            break;
                         case "÷":
-                            num = firstNum / secondNum;break;
+                            num = firstNum / secondNum;
+                            break;
                     }
                     numStack.push(num);
                 }
@@ -250,4 +252,5 @@ public class MainActivity extends Activity implements View.OnClickListener {
         return false;
     }
 }
+
 
