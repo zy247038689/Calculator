@@ -24,7 +24,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         txt_edit = (EditText)findViewById(R.id.et_input);
         txt_result = (EditText)findViewById(R.id.et_input);
-        String strEdit = txt_edit.getText().toString();
 
         findViewById(R.id.btn_0).setOnClickListener(this);
         findViewById(R.id.btn_1).setOnClickListener(this);
@@ -81,7 +80,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 isDotDown = false;
                 isOperateDown = false;
                 txt_edit.setText("0");
-                txt_result.setText("");
                 break;
             case R.id.btn_offload: {
                 String strEdit = txt_edit.getText().toString();
